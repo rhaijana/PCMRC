@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('IMAGE.jpg (2).JPG') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .register-container {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(42, 107, 49, 0.9); /* Semi-transparent dark green */
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 100px; /* Adjust size of the logo */
+      height: auto;
+    }
+
+    .register-container h2 {
+      color: #DFF4D1; /* Soft Light Green */
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .register-container input,
+    .register-container select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #A3D8A5; /* Light Green Border */
+      border-radius: 5px;
+      box-sizing: border-box;
+      background: #a2c2a2; /* Very light green */
+      color: #333;
+    }
+
+    .register-container input:focus,
+    .register-container select:focus {
+      border-color: #A1D18A; /* Soft Focus Green */
+      outline: none;
+    }
+
+    .register-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4F9F69; /* Moderate Green */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .register-container button:hover {
+      background-color: #417A51; /* Darker Green on Hover */
+    }
+
+    .register-container .register-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .register-container .register-link a {
+      color: #A3D8A5; /* Light Green for link */
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .register-container .register-link a:hover {
+      text-decoration: underline;
+    }
+
+    #organizationField {
+      display: none;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-container .eye-icon {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <div class="logo">
+      <img src="htclogo.png.png" alt="Logo">
+    </div>
+    <h2>AUTOMATED FACILITY BOOKING SYSTEM</h2>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="email" id="email" placeholder="Email Address" required>
+      <input type="text" id="phone" placeholder="Phone Number" required>
+      <input type="text" id="address" placeholder="Address" required>
+
+      <select id="type" required>
+        <option value="" disabled selected>Type (School, Company, Organization, or Other)</option>
+        <option value="School">School</option>
+        <option value="Company">Company</option>
+        <option value="Organization">Organization</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <div id="organizationField">
+        <input type="text" id="organization" placeholder="What School, Company, or Organization?" required>
+      </div>
+
+      <div class="password-container">
+        <input type="password" id="password" placeholder="Password" required>
+        <i class="fa fa-eye eye-icon" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+    <div class="register-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('type').addEventListener('change', function() {
+      var selectedType = this.value;
+      var organizationField = document.getElementById('organizationField');
+      if (selectedType === 'School' || selectedType === 'Company' || selectedType === 'Organization' || selectedType === 'Other') {
+        organizationField.style.display = 'block'; 
+      } else {
+        organizationField.style.display = 'none'; 
+      }
+    });
+
+    function togglePasswordVisibility() {
+      const passwordField = document.getElementById('password');
+      const eyeIcon = document.getElementById('togglePassword');
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordField.type = 'password';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      }
+    }
+
+    // Handle form submission and send POST request to backend
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form from submitting the usual way
+
+  const formData = {
+    fullName: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    address: document.getElementById('address').value,
+    type: document.getElementById('type').value,
+    organization: document.getElementById('organization').value || null, // Send null if no organization
+    password: document.getElementById('password').value,
+  };
+
+  // Send form data to backend API (register route)
+  fetch('/api/auth/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.redirectUrl) {
+        // If registration is successful, redirect to login page
+        window.location.href = data.redirectUrl;
+      } else {
+        // Show error message if registration fails
+        alert(data.message || 'An error occurred');
+      }
+    })
+    .catch(error => {
+      console.error('Error during registration:', error);
+      alert('Registration failed, please try again later.');
+    });
+});
+
+  </script>
+
+</body>
+</html>

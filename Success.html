@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Successful</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('Success.jpg.JPG'); /* Add your image here */
+      background-size: cover; /* Cover the entire viewport */
+      background-position: center; /* Center the background */
+      background-repeat: no-repeat; /* Prevent image repeat */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .success-container {
+      text-align: center;
+      background: rgba(255, 255, 255, 255); /*solid white*/
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .success-container h2 {
+      color: #4caf50;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .success-container p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .success-container button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .success-container button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <h2>Welcome to HOLY TRINITY COLLEGE OF GENERAL SANTOS CITY!</h2>
+    <p>Thank you for registering. You can now log in to proceed.</p>
+    <button onclick="window.location.href='login.html'">Go to Login</button>
+  </div>
+</body>
+</html>

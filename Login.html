@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('PICTURE.jpg.JPG'); /* Replace with your image URL */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .login-container input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    }
+    .password-wrapper {
+      position: relative;
+    }
+    .password-wrapper input {
+      width: 100%; /* Ensure the input in the wrapper is the same width as others */
+    }
+    .password-wrapper .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      color: #888;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .login-container button:hover {
+      background-color: #45a049;
+    }
+    .login-container .register-link,
+    .login-container .forgot-password {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .login-container a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .login-container a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="identifier" placeholder="Email or Phone Number" required>
+      <div class="password-wrapper">
+        <input type="password" id="password" placeholder="Password" required>
+        <span class="toggle-password" onclick="togglePasswordVisibility('password', this)">👁</span>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="forgot-password">
+      <a href="forgot-password.html">Forgot Password?</a>
+    </div>
+    <div class="register-link">
+      Don't have an account? <a href="register.html">Register here</a>
+    </div>
+  </div>
+  <script>
+    // Toggle password visibility
+    function togglePasswordVisibility(inputId, iconElement) {
+      const input = document.getElementById(inputId);
+      if (input.type === "password") {
+        input.type = "text";
+        iconElement.textContent = "👁️‍🗨️"; // Eye with a slash
+      } else {
+        input.type = "password";
+        iconElement.textContent = "👁"; // Normal eye
+      }
+    }
+
+    // Login functionality
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const identifier = e.target[0].value;  // Email or phone number
+      const password = e.target[1].value;
+
+      // Get users from localStorage
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+      // Check credentials
+      const user = users.find(user => 
+        (user.email === identifier || user.phoneNumber === identifier) && user.password === password
+      );
+
+      if (user) {
+        alert(`Welcome, ${user.name}!`);
+        localStorage.setItem('isAuthenticated', true);
+        window.location.href = "dashboard.html"; // Redirect to the dashboard
+      } else {
+        alert("Invalid login credentials!");
+      }
+    });
+  </script>
+</body>
+</html>

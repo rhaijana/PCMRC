@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AUTOMATED FACILITY BOOKING SYSTEM</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+    }
+    header {
+      background-color: #4caf50;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    header button {
+      padding: 10px 20px;
+      background-color: white;
+      color: #4caf50;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    header button:hover {
+      background-color: #ddd;
+    }
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+    .sidebar {
+      width: 250px;
+      background: #333;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #444;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover {
+      background: #4caf50;
+    }
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+.cards {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      min-width: 250px;
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+    .notifications {
+      margin-top: 20px;
+    }
+    .notifications ul {
+      list-style: none;
+      padding: 0;
+    }
+    .notifications li {
+      background: white;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .search-bar {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .search-bar button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .search-bar button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AUTOMATED FACILITY BOOKING SYSTEM</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+  <div class="dashboard">
+    <div class="sidebar">
+      <h2>Navigation</h2>
+      <!-- Navigation links -->
+      <a href="admin_dashboard.html">Dashboard</a>
+      <a href="view-facilities.html">View All Facilities</a>
+      <a href="manage-bookings.html">Manage Bookings</a> <!-- Manage Bookings link -->
+      <a href="add_new_facility.html">Add New Facility</a>
+      <a href="users_management.html">Users Management</a>
+      <a href="report.html">Reports</a>
+      <a href="#">Help & Support</a>
+    </div>
+    <div class="main-content">
+      <h2 id="welcomeMessage">Welcome, Admin!</h2>
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button>Search</button>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <h3>Available Facilities</h3>
+          <p>Check and manage available venues.</p>
+        </div>
+        <div class="card">
+          <h3>Pending Bookings</h3>
+          <p>Handle booking requests efficiently.</p>
+          <!-- Link to manage bookings page -->
+          <a href="manage-bookings.html" style="color: #4caf50; text-decoration: none;">Go to Manage Bookings</a>
+        </div>
+        <div class="card">
+          <h3>Users Management</h3>
+          <p>Manage system users and their roles.</p>
+        </div>
+        <div class="card">
+          <h3>System Reports</h3>
+          <p>View statistics and generate reports.</p>
+        </div>
+      </div>
+      <div class="notifications">
+        <h3>Notifications</h3>
+        <ul>
+          <li>No new notifications</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      if (confirm("Are you sure you want to logout?")) {
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("isAuthenticated");
+        window.location.href = "login.html";
+      }
+    }
+  </script>
+</body>
+</html>
